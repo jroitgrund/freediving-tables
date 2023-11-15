@@ -3,20 +3,21 @@ import { useCallback, useRef, useState } from "react";
 
 import complete from "../assets/complete.mp3";
 import countdown from "../assets/countdown.mp3";
-import { addRelaxationTable } from "./store";
 
 const COUNTDOWN_AUDIO = new Audio(countdown);
 const COMPLETE_AUDIO = new Audio(complete);
 
-type RelaxationTableViewModel =
+export type RelaxationTableViewModel =
   | { status: "tap-to-start" }
   | {
       status: "breathing-up";
       secondsLeft: number;
+      times: number[];
     }
   | {
       status: "holding";
       secondsHeld: number;
+      times: number[];
     }
   | { status: "done"; times: number[] };
 
@@ -49,8 +50,8 @@ class TapToStart implements RelaxationTableState {
 }
 
 class BreathingUp implements RelaxationTableState {
-  private secondsLeft = 120;
-  private timer: number;
+  private secondsLeft = import.meta.env.DEV ? 11 : 120;
+  private timer: NodeJS.Timeout;
 
   constructor(
     private readonly updateViewModel: (
@@ -96,12 +97,13 @@ class BreathingUp implements RelaxationTableState {
   getViewModel = (): RelaxationTableViewModel => ({
     status: "breathing-up",
     secondsLeft: this.secondsLeft,
+    times: this.times,
   });
 }
 
 class Holding implements RelaxationTableState {
   private secondsHeld = 0;
-  private timer: number;
+  private timer: NodeJS.Timeout;
 
   constructor(
     private readonly updateViewModel: (
@@ -123,7 +125,7 @@ class Holding implements RelaxationTableState {
 
   tap = () => {
     clearInterval(this.timer);
-    if (this.secondsHeld / (max(this.times) || this.secondsHeld) < 0.8) {
+    if (this.secondsHeld / (max(this.times) || this.secondsHeld) < 0.9) {
       this.updateRelaxationTable(
         new Done([...this.times, this.secondsHeld], this.updateViewModel),
       );
@@ -144,6 +146,7 @@ class Holding implements RelaxationTableState {
   getViewModel = (): RelaxationTableViewModel => ({
     status: "holding",
     secondsHeld: this.secondsHeld,
+    times: this.times,
   });
 }
 
@@ -154,7 +157,6 @@ class Done implements RelaxationTableState {
   ) {
     updateViewModel(this.getViewModel());
     COMPLETE_AUDIO.play();
-    addRelaxationTable(new Date(), times);
   }
 
   tap = (): RelaxationTableState => this;
