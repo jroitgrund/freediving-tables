@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import Home from "./routes/Home";
-import Relaxation from "./routes/Relaxation";
+import RelaxationPage from "./routes/RelaxationPage";
 
 const router = createBrowserRouter([
   {
@@ -10,7 +10,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/relaxation",
-    element: <Relaxation />,
+    element: <RelaxationPage />,
   },
 ]);
 
