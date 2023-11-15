@@ -49,7 +49,7 @@ class TapToStart implements RelaxationTableState {
 }
 
 class BreathingUp implements RelaxationTableState {
-  private secondsLeft = 11;
+  private secondsLeft = 120;
   private timer: number;
 
   constructor(
