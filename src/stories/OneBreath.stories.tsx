@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import Relaxation from "../components/Relaxation";
+import OneBreath from "../components/OneBreath";
 
 const meta = {
-  title: "Example/Relaxation",
-  component: Relaxation,
+  title: "Example/OneBreath",
+  component: OneBreath,
   parameters: {
     layout: "centered",
   },
@@ -20,7 +20,7 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof Relaxation>;
+} satisfies Meta<typeof OneBreath>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -35,20 +35,20 @@ export const Holding: Story = {
   args: {
     viewModel: {
       status: "holding",
-      secondsHeld: 121,
-      times: [100, 110, 101, 12341, 3124, 132, 435, 1342, 123, 134, 13, 3],
+      secondsHeld: 20,
+      tablesDone: 5,
     },
   },
 };
 
 export const BreathingUp: Story = {
   args: {
-    viewModel: { status: "breathing-up", secondsLeft: 121, times: [100, 110] },
+    viewModel: { status: "breathing-up", secondsLeft: 2, tablesDone: 4 },
   },
 };
 
 export const Done: Story = {
   args: {
-    viewModel: { status: "done", times: [100, 110] },
+    viewModel: { status: "done" },
   },
 };

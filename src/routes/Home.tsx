@@ -18,6 +18,11 @@ export default function Home() {
                 <Button className="w-full text-2xl">Relaxation Table</Button>
               </Link>
             </li>
+            <li className="flex-col items-stretch">
+              <Link to="/one-breath">
+                <Button className="w-full text-2xl">One Breath Table</Button>
+              </Link>
+            </li>
           </ul>
         </section>
       </main>
