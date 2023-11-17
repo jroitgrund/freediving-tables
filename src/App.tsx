@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 import Home from "./routes/Home";
+import OneBreathPage from "./routes/OneBreathPage";
 import RelaxationPage from "./routes/RelaxationPage";
 
 const router = createBrowserRouter([
@@ -11,6 +12,10 @@ const router = createBrowserRouter([
   {
     path: "/relaxation",
     element: <RelaxationPage />,
+  },
+  {
+    path: "/one-breath",
+    element: <OneBreathPage />,
   },
 ]);
 

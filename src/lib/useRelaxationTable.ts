@@ -87,11 +87,9 @@ class BreathingUp implements RelaxationTableState {
       );
     } else if (secondsLeft == 10) {
       COUNTDOWN_AUDIO.play();
+    } else {
+      this.updateViewModel(this.getViewModel());
     }
-
-    this.updateViewModel(this.getViewModel());
-
-    return this;
   };
 
   getViewModel = (): RelaxationTableViewModel => ({
