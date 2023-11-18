@@ -132,9 +132,9 @@ class Holding implements OneBreathTableState {
       }
     } else if (this.secondsHeld === this.seconds - 10) {
       COUNTDOWN_AUDIO.play();
+    } else {
+      this.updateViewModel(this.getViewModel());
     }
-
-    this.updateViewModel(this.getViewModel());
   };
 
   tap = () => {};
