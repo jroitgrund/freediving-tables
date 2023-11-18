@@ -5,7 +5,6 @@ import countdown from "../assets/countdown.mp3";
 
 const COUNTDOWN_AUDIO = new Audio(countdown);
 const COMPLETE_AUDIO = new Audio(complete);
-const SECONDS_TO_HOLD = 30;
 const NUM_TABLES = 10;
 
 export type OneBreathTableViewModel =
@@ -32,7 +31,7 @@ interface OneBreathTableState {
 }
 
 class TapToStart implements OneBreathTableState {
-  constructor() {}
+  constructor(private readonly seconds: number) {}
 
   getViewModel = (): OneBreathTableViewModel => ({
     status: "tap-to-start",
@@ -43,7 +42,7 @@ class TapToStart implements OneBreathTableState {
     updateRelaxationTable: (newOneBreathTable: OneBreathTableState) => void,
   ) => {
     updateRelaxationTable(
-      new BreathingUp(updateViewModel, updateRelaxationTable, 0),
+      new BreathingUp(updateViewModel, updateRelaxationTable, this.seconds, 0),
     );
   };
 
@@ -61,6 +60,7 @@ class BreathingUp implements OneBreathTableState {
     private readonly updateRelaxationTable: (
       newOneBreathTable: OneBreathTableState,
     ) => void,
+    private readonly seconds: number,
     private readonly tablesDone: number,
   ) {
     this.updateViewModel(this.getViewModel());
@@ -75,12 +75,13 @@ class BreathingUp implements OneBreathTableState {
 
   countdown = () => {
     const secondsLeft = --this.secondsLeft;
-    if (secondsLeft == 0) {
+    if (secondsLeft === 0) {
       clearInterval(this.timer);
       this.updateRelaxationTable(
         new Holding(
           this.updateViewModel,
           this.updateRelaxationTable,
+          this.seconds,
           this.tablesDone,
         ),
       );
@@ -107,6 +108,7 @@ class Holding implements OneBreathTableState {
     private readonly updateRelaxationTable: (
       newOneBreathTable: OneBreathTableState,
     ) => void,
+    private readonly seconds: number,
     private readonly tablesDone: number,
   ) {
     this.updateViewModel(this.getViewModel());
@@ -115,19 +117,20 @@ class Holding implements OneBreathTableState {
 
   private countUp = () => {
     this.secondsHeld++;
-    if (this.secondsHeld == SECONDS_TO_HOLD) {
-      if (this.tablesDone + 1 == NUM_TABLES) {
+    if (this.secondsHeld === this.seconds) {
+      if (this.tablesDone + 1 === NUM_TABLES) {
         this.updateRelaxationTable(new Done(this.updateViewModel));
       } else {
         this.updateRelaxationTable(
           new BreathingUp(
             this.updateViewModel,
             this.updateRelaxationTable,
+            this.seconds,
             this.tablesDone + 1,
           ),
         );
       }
-    } else if (this.secondsHeld == SECONDS_TO_HOLD - 10) {
+    } else if (this.secondsHeld === this.seconds - 10) {
       COUNTDOWN_AUDIO.play();
     }
 
@@ -167,8 +170,8 @@ class Done implements OneBreathTableState {
   });
 }
 
-export function useOneBreathTable() {
-  const oneBreathTable = useRef<OneBreathTableState>(new TapToStart());
+export function useOneBreathTable(seconds: number) {
+  const oneBreathTable = useRef<OneBreathTableState>(new TapToStart(seconds));
   const setOneBreathTable = useCallback(
     (newOneBreathTable: OneBreathTableState) =>
       (oneBreathTable.current = newOneBreathTable),

@@ -9,7 +9,7 @@ export default function Button({
   return (
     <button
       className={classNames(
-        "flex justify-center rounded bg-teal-300 p-2 text-black shadow-md",
+        "flex justify-center rounded bg-teal-300 p-2 text-black shadow-md disabled:bg-gray-400",
         className || "",
       )}
       {...props}
