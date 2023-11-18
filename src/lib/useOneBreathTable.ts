@@ -118,7 +118,8 @@ class Holding implements OneBreathTableState {
   private countUp = () => {
     this.secondsHeld++;
     if (this.secondsHeld === this.seconds) {
-      if (this.tablesDone + 1 === NUM_TABLES) {
+      clearInterval(this.timer);
+      if (this.tablesDone + 1 === (import.meta.env.DEV ? 2 : NUM_TABLES)) {
         this.updateRelaxationTable(new Done(this.updateViewModel));
       } else {
         this.updateRelaxationTable(

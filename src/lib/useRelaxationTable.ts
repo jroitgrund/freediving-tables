@@ -7,6 +7,8 @@ import countdown from "../assets/countdown.mp3";
 const COUNTDOWN_AUDIO = new Audio(countdown);
 const COMPLETE_AUDIO = new Audio(complete);
 
+const BREATHE_UP_SECONDS = 120;
+
 export type RelaxationTableViewModel =
   | { status: "tap-to-start" }
   | {
@@ -50,7 +52,7 @@ class TapToStart implements RelaxationTableState {
 }
 
 class BreathingUp implements RelaxationTableState {
-  private secondsLeft = import.meta.env.DEV ? 11 : 120;
+  private secondsLeft = import.meta.env.DEV ? 11 : BREATHE_UP_SECONDS;
   private timer: NodeJS.Timeout;
 
   constructor(
