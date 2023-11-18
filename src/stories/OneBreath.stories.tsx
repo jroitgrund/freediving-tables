@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import OneBreath from "../components/OneBreath";
+import { OneBreathRunning } from "../components/OneBreath";
 
 const meta = {
-  title: "Example/OneBreath",
-  component: OneBreath,
+  title: "Example/OneBreathRunning",
+  component: OneBreathRunning,
   parameters: {
     layout: "centered",
   },
@@ -15,12 +15,12 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <div className="flex h-[667px] w-[375px] flex-col bg-black text-white">
+      <div className="flex h-[667px] w-[375px] bg-black text-white">
         <Story />
       </div>
     ),
   ],
-} satisfies Meta<typeof OneBreath>;
+} satisfies Meta<typeof OneBreathRunning>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

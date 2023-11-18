@@ -76,7 +76,7 @@ class BreathingUp implements RelaxationTableState {
 
   countdown = () => {
     const secondsLeft = --this.secondsLeft;
-    if (secondsLeft == 0) {
+    if (secondsLeft === 0) {
       clearInterval(this.timer);
       this.updateRelaxationTable(
         new Holding(
@@ -85,7 +85,7 @@ class BreathingUp implements RelaxationTableState {
           this.times,
         ),
       );
-    } else if (secondsLeft == 10) {
+    } else if (secondsLeft === 10) {
       COUNTDOWN_AUDIO.play();
     } else {
       this.updateViewModel(this.getViewModel());
