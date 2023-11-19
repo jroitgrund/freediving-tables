@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import Relaxation from "../components/Relaxation";
+import StoriesContainer from "./StoriesContainer";
 
 const meta = {
   title: "Example/Relaxation",
@@ -15,9 +16,9 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <div className="flex h-[667px] w-[375px] flex-col bg-black text-white">
+      <StoriesContainer>
         <Story />
-      </div>
+      </StoriesContainer>
     ),
   ],
 } satisfies Meta<typeof Relaxation>;

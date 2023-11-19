@@ -7,7 +7,7 @@ export default function Input({
   ...props
 }: ComponentProps<"input"> & { description: string }) {
   return (
-    <div className="group relative flex">
+    <div className="group relative flex grow">
       <input
         type="text"
         placeholder=""

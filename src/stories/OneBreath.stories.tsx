@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import { OneBreathRunning } from "../components/OneBreath";
+import StoriesContainer from "./StoriesContainer";
 
 const meta = {
   title: "Example/OneBreathRunning",
@@ -15,9 +16,9 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <div className="flex h-[667px] w-[375px] bg-black text-white">
+      <StoriesContainer>
         <Story />
-      </div>
+      </StoriesContainer>
     ),
   ],
 } satisfies Meta<typeof OneBreathRunning>;

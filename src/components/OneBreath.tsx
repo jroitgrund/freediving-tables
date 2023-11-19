@@ -6,7 +6,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { Link } from "react-router-dom";
 import { useEventListener } from "usehooks-ts";
 
 import {
@@ -16,38 +15,22 @@ import {
 import { displaySeconds } from "../lib/util";
 import Button from "./Button";
 import Input from "./Input";
+import TopBar from "./TopBar";
 
 export default function OneBreath() {
   const [seconds, setSeconds] = useState<number | undefined>(undefined);
 
   return (
-    <div className="flex grow flex-col px-3">
-      <div className="flex justify-end py-3">
-        <Link to="/">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="h-6 w-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M6 18L18 6M6 6l12 12"
-            />
-          </svg>
-        </Link>
-      </div>
-      <div className="flex grow items-center justify-center">
+    <>
+      <TopBar />
+      <div className="flex grow">
         {seconds == null ? (
           <OneBreathInput setSeconds={setSeconds} />
         ) : (
           <OneBreathRunningContainer seconds={seconds} />
         )}
       </div>
-    </div>
+    </>
   );
 }
 
@@ -71,7 +54,7 @@ function OneBreathInput({
   );
 
   return (
-    <div className="flex grow flex-col gap-2 p-10">
+    <div className="flex grow flex-col gap-2 self-center">
       <Input description="Seconds" onChange={onChange} />
       <Button onClick={onClick} disabled={disabled}>
         Go
@@ -112,7 +95,7 @@ export function OneBreathRunning({
   );
 
   return (
-    <div className="flex grow self-stretch" ref={ref}>
+    <div className="flex grow" ref={ref}>
       {viewModel.status === "tap-to-start" ? <TapToStart /> : null}
       {viewModel.status === "breathing-up" ? (
         <BreathingUp
@@ -133,9 +116,9 @@ export function OneBreathRunning({
 
 function TapToStart() {
   return (
-    <section className="grow self-center text-center text-4xl font-semibold text-teal-300">
+    <div className="flex grow justify-center self-center text-4xl font-semibold text-teal-300">
       tap anywhere to start
-    </section>
+    </div>
   );
 }
 
@@ -147,34 +130,34 @@ function BreathingUp({
   tablesDone: number;
 }) {
   return (
-    <div className="flex grow flex-col self-stretch">
-      <section className="flex justify-center text-2xl font-semibold text-teal-200">
+    <div className="flex grow flex-col">
+      <div className="flex justify-center text-2xl font-semibold text-teal-200">
         Hold {tablesDone + 1}
-      </section>
-      <section className="flex grow items-center justify-center text-4xl font-semibold text-teal-300">
+      </div>
+      <div className="flex grow items-center justify-center text-4xl font-semibold text-teal-300">
         {displaySeconds(secondsLeft)}
-      </section>
+      </div>
     </div>
   );
 }
 
 function Holding({ held, tablesDone }: { held: number; tablesDone: number }) {
   return (
-    <div className="flex grow flex-col self-stretch">
-      <section className="flex justify-center text-2xl font-semibold text-teal-200">
+    <div className="flex grow flex-col">
+      <div className="flex justify-center text-2xl font-semibold text-teal-200">
         Hold {tablesDone + 1}
-      </section>
-      <section className="flex grow items-center justify-center text-4xl font-semibold text-teal-300">
+      </div>
+      <div className="flex grow items-center justify-center text-4xl font-semibold text-teal-300">
         {displaySeconds(held)}
-      </section>
+      </div>
     </div>
   );
 }
 
 function Done() {
   return (
-    <div className="flex grow items-center justify-center self-stretch">
-      <section className="text-4xl font-semibold text-teal-200">Done</section>
+    <div className="flex grow items-center justify-center text-4xl font-semibold text-teal-200">
+      Done
     </div>
   );
 }

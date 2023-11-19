@@ -4,28 +4,22 @@ import Button from "../components/Button";
 
 export default function Home() {
   return (
-    <div className="flex grow flex-col p-10">
-      <header className="flex justify-center">
-        <h1 className="text-4xl font-semibold text-teal-300">
-          Freediving Trainer
-        </h1>
-      </header>
-      <main className="flex grow items-center">
-        <section className="grow">
-          <ul className="flex flex-col items-stretch gap-5 p-10">
-            <li className="flex-col items-stretch">
-              <Link to="/relaxation">
-                <Button className="w-full text-2xl">Relaxation Table</Button>
-              </Link>
-            </li>
-            <li className="flex-col items-stretch">
-              <Link to="/one-breath">
-                <Button className="w-full text-2xl">One Breath Table</Button>
-              </Link>
-            </li>
-          </ul>
-        </section>
-      </main>
+    <div className="flex grow flex-col">
+      <h1 className="flex justify-center text-4xl font-semibold text-teal-300">
+        Freediving Trainer
+      </h1>
+      <ul className="flex grow flex-col justify-center gap-5">
+        <li>
+          <Link to="/relaxation">
+            <Button className="w-full text-2xl">Relaxation Table</Button>
+          </Link>
+        </li>
+        <li>
+          <Link to="/one-breath">
+            <Button className="w-full text-2xl">One Breath Table</Button>
+          </Link>
+        </li>
+      </ul>
     </div>
   );
 }

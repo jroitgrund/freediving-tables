@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
 import Button from "../components/Button";
+import StoriesContainer from "./StoriesContainer";
 
 const meta = {
   title: "Example/Button",
@@ -12,9 +13,11 @@ const meta = {
   args: { children: <>Click me!</> },
   decorators: [
     (Story) => (
-      <div className="flex h-[667px] w-[375px] flex-col justify-center bg-black p-2 text-white">
-        <Story />
-      </div>
+      <StoriesContainer>
+        <div className="flex grow items-center">
+          <Story />
+        </div>
+      </StoriesContainer>
     ),
   ],
 } satisfies Meta<typeof Button>;
