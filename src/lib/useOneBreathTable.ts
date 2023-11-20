@@ -67,7 +67,7 @@ class BreathingUp implements OneBreathTableState {
     this.timer = setInterval(() => this.countdown(), 1000);
   }
 
-  tap = () => this;
+  tap = () => {};
 
   kill = () => {
     clearInterval(this.timer);
@@ -159,7 +159,7 @@ class Done implements OneBreathTableState {
     COMPLETE_AUDIO.play();
   }
 
-  tap = (): OneBreathTableState => this;
+  tap = () => {};
 
   kill = () => {
     COMPLETE_AUDIO.pause();

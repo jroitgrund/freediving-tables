@@ -56,7 +56,7 @@ export default function Relaxation({
 
 function TapToStart() {
   return (
-    <div className="flex justify-center self-center text-4xl font-semibold text-teal-300">
+    <div className="flex grow justify-center self-center text-4xl font-semibold text-teal-300">
       tap anywhere to start
     </div>
   );

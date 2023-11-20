@@ -3,9 +3,11 @@ import { useCallback, useRef, useState } from "react";
 
 import complete from "../assets/complete.mp3";
 import countdown from "../assets/countdown.mp3";
+import visualisation from "../assets/visualisation.mp3";
 
 const COUNTDOWN_AUDIO = new Audio(countdown);
 const COMPLETE_AUDIO = new Audio(complete);
+const VISUALISATION = new Audio(visualisation);
 
 const BREATHE_UP_SECONDS = 120;
 
@@ -68,7 +70,7 @@ class BreathingUp implements RelaxationTableState {
     this.timer = setInterval(() => this.countdown(), 1000);
   }
 
-  tap = () => this;
+  tap = () => {};
 
   kill = () => {
     clearInterval(this.timer);
@@ -87,9 +89,10 @@ class BreathingUp implements RelaxationTableState {
           this.times,
         ),
       );
-    } else if (secondsLeft === 10) {
-      COUNTDOWN_AUDIO.play();
     } else {
+      if (secondsLeft === 10) {
+        COUNTDOWN_AUDIO.play();
+      }
       this.updateViewModel(this.getViewModel());
     }
   };
@@ -116,6 +119,7 @@ class Holding implements RelaxationTableState {
   ) {
     this.updateViewModel(this.getViewModel());
     this.timer = setInterval(() => this.countUp(), 1000);
+    VISUALISATION.play();
   }
 
   private countUp = () => {
@@ -125,6 +129,8 @@ class Holding implements RelaxationTableState {
 
   tap = () => {
     clearInterval(this.timer);
+    VISUALISATION.pause();
+    VISUALISATION.currentTime = 0;
     if (this.secondsHeld / (max(this.times) || this.secondsHeld) < 0.9) {
       this.updateRelaxationTable(
         new Done([...this.times, this.secondsHeld], this.updateViewModel),
@@ -141,6 +147,8 @@ class Holding implements RelaxationTableState {
 
   kill = () => {
     clearInterval(this.timer);
+    VISUALISATION.pause();
+    VISUALISATION.currentTime = 0;
   };
 
   getViewModel = (): RelaxationTableViewModel => ({
@@ -159,7 +167,7 @@ class Done implements RelaxationTableState {
     COMPLETE_AUDIO.play();
   }
 
-  tap = (): RelaxationTableState => this;
+  tap = () => {};
 
   kill = () => {
     COMPLETE_AUDIO.pause();
