@@ -126,7 +126,10 @@ class Holding implements RelaxationTableState {
 
   tap = () => {
     clearInterval(this.timer);
-    if (this.secondsHeld / (max(this.times) || this.secondsHeld) < 0.9) {
+    if (
+      this.times.length >= 4 &&
+      this.secondsHeld / (max(this.times) || this.secondsHeld) < 0.9
+    ) {
       this.updateRelaxationTable(
         new Done([...this.times, this.secondsHeld], this.updateViewModel),
       );
