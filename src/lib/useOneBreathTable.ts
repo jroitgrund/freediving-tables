@@ -50,7 +50,7 @@ class TapToStart implements OneBreathTableState {
 }
 
 class BreathingUp implements OneBreathTableState {
-  private secondsLeft = 5;
+  private secondsLeft = 15;
   private timer: NodeJS.Timeout;
 
   constructor(
@@ -71,10 +71,15 @@ class BreathingUp implements OneBreathTableState {
 
   kill = () => {
     clearInterval(this.timer);
+    COUNTDOWN_AUDIO.pause();
+    COUNTDOWN_AUDIO.currentTime = 0;
   };
 
   countdown = () => {
     const secondsLeft = --this.secondsLeft;
+    if (secondsLeft === 10) {
+      COUNTDOWN_AUDIO.play();
+    }
     if (secondsLeft === 0) {
       clearInterval(this.timer);
       this.updateRelaxationTable(
